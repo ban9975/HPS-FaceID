@@ -18,7 +18,17 @@ module.exports = NodeHelper.create({
         var add = spawn('python3', ['./modules/MMM-Face-Recognition-SMAI/rec.py add'])
         break
       case "LOGOUT":
-        this.sendSocketNotification("LOGOUT")
+        var fs = require('fs');
+        fs.readFile("./modules/MMM-Face-Recognition-SMAI/faceID.json", (err,json) => {
+            if(err)
+                console.log(err)
+            else
+                let data = JSON.parse(json)
+                data.user = "Logout"
+                let updated = JSON.stringify(data, null, 2);
+                fs.writeFile("./modules/MMM-Face-Recognition-SMAI/faceID.json", updated, 'utf8', (err) => {})
+            // console.log(20, face_rec_name);
+        })
         break
       case "RENDER":
         var fs = require('fs');
@@ -26,12 +36,15 @@ module.exports = NodeHelper.create({
             if(err)
                 console.log(err)
             else
-                const data = JSON.parse(json)
+                let data = JSON.parse(json)
                 face_rec_name = data.user
             // console.log(20, face_rec_name);
         })
         if(face_rec_name === "Guest") {
             this.sendSocketNotification("UNKNOWN")
+        }
+        else if(face_rec_name === "Logout") {
+          this.sendSocketNotification("LOGOUT")
         }
         else {
             this.sendSocketNotification("KNOWN", face_rec_name)

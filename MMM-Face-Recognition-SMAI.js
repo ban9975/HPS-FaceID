@@ -85,28 +85,28 @@ notificationReceived: function(notification, payload, sender) {
 
 //Recieve notification from socket of Python Variables via nodehelper.js
 socketNotificationReceived: function(notification, payload) {
+  var button = document.getElementById("FaceID")
+  var elem = document.getElementById("GREET")
+  var img = document.getElementById("IMG")
     switch(notification) {
       case "KNOWN":
         //Store Image Here
-        var elem = document.getElementById("GREET")
+        button.textContent = "Log Out"
         elem.innerHTML = "Welcome back, " + payload
-        var img = document.getElementById("IMG");
         img.setAttribute('src', this.config.fileUrl + "faces/" + payload + "-id.png")
         return elem
         break
 
       case "UNKNOWN":
-        var elem = document.getElementById("GREET")
+        button.textContent = "Log Out"
         elem.innerHTML = "Hello, unknown user"
-        var img = document.getElementById("img")
         img.setAttribute('src', this.config.fileUrl + "guest.gif")
         return elem
         break
 
       case "LOGOUT":
-        var elem = document.getElementById("GREET")
+        button.textContent = "FaceID"
         elem.innerHTML = this.config.prompt
-        var img = document.getElementById("img")
         img.setAttribute('src', this.config.fileUrl + "logo.png")
         return elem
         break
