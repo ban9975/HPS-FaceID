@@ -9,13 +9,14 @@ var NodeHelper = require("node_helper")
 module.exports = NodeHelper.create({
   start: function() {
     this.countDown = 10000000
+    spawn('python3', ['./modules/MMM-Face-Recognition-SMAI/recSer.py'])
   },
   socketNotificationReceived: function(notification, payload) {
     var helper = this
     switch(notification) {
       case "FACE_ID":
         console.log("face id")
-        var rec = spawn('python3', ['./modules/MMM-Face-Recognition-SMAI/rec.py', 'rec'])
+        var rec = spawn('python3', ['./modules/MMM-Face-Recognition-SMAI/recCli.py', 'rec'])
         rec.stdout.on('data', function(data) {
           console.log(data.toString())
           helper.sendSocketNotification("SAVED")
@@ -24,7 +25,7 @@ module.exports = NodeHelper.create({
         break
       case "ADD_PROFILE":
         console.log("add profile")
-        var add = spawn('python3', ['./modules/MMM-Face-Recognition-SMAI/rec.py', 'add'])
+        var add = spawn('python3', ['./modules/MMM-Face-Recognition-SMAI/recCli.py', 'add'])
         add.stdout.on('data', function(data) {
           console.log(data.toString())
           name = data.toString()
