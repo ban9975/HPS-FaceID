@@ -87,7 +87,7 @@ Here is an example for an entry in `config.js`
    ``` bash
    sudo nano /etc/dphys-swapfile
    ```
-   change CONF_SWAPSIZE=100 to CONF_SWAPSIZE=1024 and save / exit nano
+   Change CONF_SWAPSIZE=100 to CONF_SWAPSIZE=1024 and save / exit nano
    ``` bash
    sudo /etc/init.d/dphys-swapfile restart
    git clone https://github.com/davisking/dlib.git
