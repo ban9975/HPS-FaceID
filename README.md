@@ -42,7 +42,7 @@ Here is an example for an entry in `config.js`
 }
 ```
 
-## Instruction for precoditions
+## Appendix - Instruction for precoditions
 1. Magic Mirror
    ``` bash
    cd ~
