@@ -42,7 +42,7 @@ Here is an example for an entry in `config.js`
 }
 ```
 
-### How to meet precoditions
+## Instruction for precoditions
 1. Magic Mirror
    ``` bash
    cd ~
@@ -100,4 +100,8 @@ Here is an example for an entry in `config.js`
 4. Install face recognition
    ``` bash
    sudo pip3 install face_recognition
+   ```
+5. Install dependancies for this module
+   ``` bash
+   pip install Pillow
    ```
