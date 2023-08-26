@@ -6,9 +6,9 @@ A module for the [MagicMirror](https://github.com/MichMich/MagicMirror) project 
 This module allows you to access profiles using face recognition. This works on the back of OpenCV face recognition module. 
 
 ## Screenshots
-| ![FaceID Guest](img/readme/face-recognition-guest-smai.png) | ![Face ID Detected](img/readme/face-recognition-stark-smai.png) | 
-|---|---|
-| A guest profile as default | User has been recognised |
+| ![FaceID Logged Out](img/readme/noUser.png) | ![Face ID Detected](img/readme/knownUser.png) | ![Face ID Unknown User](img/readme/unknownUser.png) |
+|---|---|---|
+| A logo as default | User has been recognised | Unknown user has been recognised |
 
 
 ## Preconditions
@@ -17,7 +17,8 @@ This module allows you to access profiles using face recognition. This works on 
 * Node.js version >= 7
 * npm
 * [OpenCV face-recognition](https://github.com/ageitgey/face_recognition)
-* Raspberry Pi 4 Camera Module
+* Raspberry Pi 3 Model B
+* Raspbery Pi Camera Module 2
 
 
 ## Step 1 – Install the module
