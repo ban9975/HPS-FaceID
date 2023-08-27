@@ -9,14 +9,15 @@ var NodeHelper = require("node_helper")
 module.exports = NodeHelper.create({
   start: function() {
     this.countDown = 10000000
-    spawn('python3', ['./modules/MMM-Face-Recognition-SMAI/recSer.py'])
+    spawn('python3', ['./modules/HPS-FaceID/recSer.py'])
   },
   socketNotificationReceived: function(notification, payload) {
     var helper = this
+    var fileUrl = './modules/HPS-FaceID/'
     switch(notification) {
       case "FACE_ID":
         console.log("face id")
-        var rec = spawn('python3', ['./modules/MMM-Face-Recognition-SMAI/recCli.py', 'rec'])
+        var rec = spawn('python3', [fileUrl + 'recCli.py', 'rec'])
         rec.stdout.on('data', function(data) {
           console.log(data.toString())
           helper.sendSocketNotification("SAVED")
@@ -25,49 +26,49 @@ module.exports = NodeHelper.create({
         break
       case "ADD_PROFILE":
         console.log("add profile")
-        var add = spawn('python3', ['./modules/MMM-Face-Recognition-SMAI/recCli.py', 'add'])
+        var add = spawn('python3', [fileUrl + 'recCli.py', 'add'])
         add.stdout.on('data', function(data) {
           console.log(data.toString())
           name = data.toString()
           helper.sendSocketNotification("NEWPROFILE", name)
         })
         break
-      case "LOGOUT":
-        console.log("log out")
-        helper.sendSocketNotification("LOGGEDOUT")
+      case 'LOGOUT':
+        console.log('log out')
+        helper.sendSocketNotification('LOGGEDOUT')
         var fs = require('fs').promises
         async function logout() {
-          json = await fs.readFile("./modules/MMM-Face-Recognition-SMAI/faceID.json")
+          json = await fs.readFile(fileUrl + 'faceID.json')
                        .catch((err) => console.error('Fail to read file', err))
           data = JSON.parse(json)
-          data.user = "Logout"
+          data.user = 'Logout'
           updated = JSON.stringify(data, null, 2);
-          await fs.writeFile("./modules/MMM-Face-Recognition-SMAI/faceID.json", updated, 'utf8')
+          await fs.writeFile(fileUrl + 'faceID.json', updated, 'utf8')
                 .catch((err) => console.error('Fail to write file', err))
-          helper.sendSocketNotification("SAVED")
+          helper.sendSocketNotification('SAVED')
         }
         logout()
         break
       case "RENDER":
-        console.log("render")
+        console.log('render')
         var fs = require('fs').promises;
         async function readName() {
-          json = await fs.readFile("./modules/MMM-Face-Recognition-SMAI/faceID.json")
+          json = await fs.readFile(fileUrl + 'faceID.json')
                        .catch((err) => console.error('Fail to read file', err))
           data = JSON.parse(json)
           face_rec_name = data.user
 
-          if(face_rec_name === "Guest") {
-            console.log("helper send unknown")
-              helper.sendSocketNotification("UNKNOWN")
+          if(face_rec_name === 'Guest') {
+            console.log('helper send unknown')
+              helper.sendSocketNotification('UNKNOWN')
           }
-          else if(face_rec_name === "Logout") {
-            console.log("helper send logout")
-            helper.sendSocketNotification("LOGGEDOUT")
+          else if(face_rec_name === 'Logout') {
+            console.log('helper send logout')
+            helper.sendSocketNotification('LOGGEDOUT')
           }
           else {
-            console.log("helper send known")
-            helper.sendSocketNotification("KNOWN", face_rec_name)
+            console.log('helper send known')
+            helper.sendSocketNotification('KNOWN', face_rec_name)
           }
         }
         readName()

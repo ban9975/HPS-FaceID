@@ -35,7 +35,7 @@ Here is an example for an entry in `config.js`
 
 ```javascript
 {
-  module: "MMM-HPS-FaceID",
+  module: "HPS-FaceID",
   position: "top_right",
   config: {
     //prompt: "Put in your own text"

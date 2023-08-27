@@ -1,30 +1,3 @@
-# if __name__ == '__main__':
-#     if len(sys.argv) < 2:
-#         print('no argument')
-#     elif sys.argv[1] == 'encode':
-#         encodeKnown()
-#         exit()
-        
-#     camera = picamera.PiCamera()
-#     camera.resolution = (480, 640)
-#     output = np.empty((640, 480, 3), dtype=np.uint8)
-    
-#     face_locations = []
-#     while True:
-#         # print("capturing")
-#         camera.capture(output, format="rgb")
-#         face_locations = face_recognition.face_locations(output)
-#         if len(face_locations) > 0:
-#             # print("{} faces detected".format(len(face_locations)))
-#             break
-#     face_encodings = []
-#     face_encodings = face_recognition.face_encodings(output, face_locations)
-
-#     if sys.argv[1] == 'add':
-#         saveFace(face_encodings, output)
-#     elif sys.argv[1] == 'rec':
-#         rec(face_encodings)
-    
 # server
 import socket
 import pickle
@@ -36,6 +9,8 @@ import os
 import time
 from PIL import Image
 import json
+
+fileUrl = './modules/HPS-FaceID/'
 
 def encodeKnown():
     # encode known faces
@@ -61,7 +36,7 @@ def rec(face_encodings):
     # load known faces
     known_people = [] # names
     known_face_encodings = [] # encoded objects
-    with open('./modules/MMM-Face-Recognition-SMAI/faces.json', 'r') as f:
+    with open(fileUrl + 'faces.json', 'r') as f:
         data = json.load(f)
         for iterator in data:
             known_people.append(iterator)
@@ -80,29 +55,29 @@ def rec(face_encodings):
             break
 
     print("Person Detected: {}!".format(face_id))
-    with open('./modules/MMM-Face-Recognition-SMAI/faceID.json', 'r') as f:
+    with open(fileUrl + 'faceID.json', 'r') as f:
         data = json.load(f)
         data['user'] = face_id
-    with open('./modules/MMM-Face-Recognition-SMAI/faceID.json', 'w') as f:
+    with open(fileUrl + 'faceID.json', 'w') as f:
         json.dump(data, f, indent=2)
     return face_id
 
 def saveFace(face_encodings, output):
-    with open('./modules/MMM-Face-Recognition-SMAI/faceID.json', 'r') as f:
+    with open(fileUrl + 'faceID.json', 'r') as f:
         data = json.load(f)
         newUser = 'User' + str(data['count'])
         data['count'] += 1
         data['user'] = newUser
-    with open('./modules/MMM-Face-Recognition-SMAI/faceID.json', 'w') as f:
+    with open(fileUrl + 'faceID.json', 'w') as f:
         json.dump(data, f, indent=2)
 
     img = Image.fromarray(output, mode="RGB")
-    img.save('./modules/MMM-Face-Recognition-SMAI/public/faces/'+newUser+'.png')
+    img.save(fileUrl + 'public/faces/'+newUser+'.png')
 
-    with open('./modules/MMM-Face-Recognition-SMAI/faces.json', 'r') as f:
+    with open(fileUrl + 'faces.json', 'r') as f:
         data = json.load(f)
         data[newUser] = face_encodings[0].tolist()
-    with open('./modules/MMM-Face-Recognition-SMAI/faces.json', 'w') as f:
+    with open(fileUrl + 'faces.json', 'w') as f:
         json.dump(data, f, indent=2)
     return newUser
 
@@ -123,7 +98,7 @@ if __name__ == '__main__':
         print ('Connected by', addr)
         while True:
             chunk = conn.recv(32768)
-            img = face_recognition.load_image_file('./modules/MMM-Face-Recognition-SMAI/tmp.png')
+            img = face_recognition.load_image_file(fileUrl + 'tmp.png')
             face_locations = face_recognition.face_locations(img)
             if len(face_locations) > 0:
                 print('{} faces detected'.format(len(face_locations)))

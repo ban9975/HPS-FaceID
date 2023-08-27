@@ -25,7 +25,7 @@ if __name__ == '__main__':
     while True:
         camera.capture(output, format="rgb")
         img = Image.fromarray(output, mode="RGB")
-        img.save('./modules/MMM-Face-Recognition-SMAI/tmp.png')
+        img.save('./modules/HPS-FaceID/tmp.png')
         s.sendall(command)
         res = s.recv(1024).decode('utf-8')
         if res != "retake":

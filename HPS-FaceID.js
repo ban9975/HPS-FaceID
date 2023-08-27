@@ -1,7 +1,7 @@
-Module.register("MMM-Face-Recognition-SMAI", {
+Module.register("HPS-FaceID", {
 defaults: {
   prompt: "Use FaceID to access profiles",
-  fileUrl: "modules/MMM-Face-Recognition-SMAI/public/",
+  fileUrl: "modules/HPS-FaceID/public/",
   width: "200px",
   position: "left",
   refreshInterval: 2
