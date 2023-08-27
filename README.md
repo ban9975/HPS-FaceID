@@ -1,4 +1,4 @@
-# HPS-Smart-Mirror-FaceID
+# HPS-FaceID
 
 A module for the [MagicMirror](https://github.com/MichMich/MagicMirror) project by adding (faceID) face recognition.
 
@@ -24,8 +24,8 @@ This module allows you to access profiles using face recognition. This works on 
 In your MagicMirror directory:
 
 ```bash cd modules
-   git clone https://github.com/ban9975/HPS-Smart-Mirror-FaceID.git
-   cd HPS-Smart-Mirror-FaceID
+   git clone https://github.com/ban9975/HPS-FaceID.git
+   cd HPS-FaceID
    npm install
 ```
 
